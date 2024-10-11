@@ -1,10 +1,4 @@
 module.exports = {
-  content: [
-    "./**/*.js",
-    "../lib/jorin_me.ex",
-  ],
-  plugins: [
-    require("@tailwindcss/typography"),
-  ]
+  content: ["./**/*.js", "../lib/libo_me.ex"],
+  plugins: [require("@tailwindcss/typography")],
 };
-

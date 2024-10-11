@@ -1,9 +1,9 @@
-defmodule JorinMe.MixProject do
+defmodule LiboMe.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :jorin_me,
+      app: :libo_me,
       version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
@@ -14,7 +14,7 @@ defmodule JorinMe.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {JorinMe.Application, []}
+      mod: {LiboMe.Application, []}
     ]
   end
 
