@@ -37,7 +37,12 @@ defmodule LiboMe do
     all_posts = Content.all_posts()
     about_page = Content.about_page()
     assert_uniq_page_ids!(pages)
-    render_file("index.html", Render.index(%{posts: Content.active_posts()}))
+
+    render_file(
+      "index.html",
+      Render.index(%{posts: Content.active_posts(), about: Content.about_page()})
+    )
+
     render_file("404.html", Render.page(Content.not_found_page()))
     render_file(about_page.html_path, Render.page(about_page))
     render_file("archive/index.html", Render.archive(%{posts: all_posts}))
