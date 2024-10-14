@@ -12,4 +12,4 @@ Founded [JsutRecap](https://justrecap.it), a tool helps you learn better and fas
 
 Before that, worked in companies as big as Google and as small as a 5-person startup.
 
-You find to me on [Twitter](https://x.com/liboshen), [LinkedIn](https://linkedin.com/in/libo-shen), and [Github](https://github.com/LiboShen).
+You cand find to me on [Twitter](https://x.com/liboshen), [LinkedIn](https://linkedin.com/in/libo-shen), and [GitHub](https://github.com/LiboShen).
