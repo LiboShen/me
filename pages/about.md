@@ -8,7 +8,7 @@ I'm an engineer turned founder.
 
 Love the craft of making software.
 
-Founded [JsutRecap](https://justrecap.it), a tool helps you learn better and faster from videos.
+Founded [JustRecap](https://justrecap.it), a tool helps you learn better and faster from videos.
 
 Before that, worked in companies as big as Google and as small as a 5-person startup.
 
