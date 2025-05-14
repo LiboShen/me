@@ -54,8 +54,12 @@ defmodule LiboMe do
     render_file("404.html", Render.page(Content.not_found_page()))
     render_file(about_page.html_path, Render.page(about_page))
     render_file("archive/index.html", Render.archive(%{posts: all_posts}))
-    render_file("book_reports/index.html", 
-      Render.book_reviews(%{reviews: all_book_reviews, page: book_reviews_page}))
+
+    render_file(
+      "book_reports/index.html",
+      Render.book_reviews(%{reviews: all_book_reviews, page: book_reviews_page})
+    )
+
     write_file("index.xml", Render.rss(all_posts))
     write_file("sitemap.xml", Render.sitemap(pages))
     render_posts(all_posts)
