@@ -52,6 +52,27 @@ defmodule LiboMe.Page do
     )
   end
 
+  def build("pages/readings/" <> filename, attrs, body) do
+    id = Path.basename(Path.rootname(filename))
+    html_path = Path.join(["book_reports", id, "index.html"])
+    src_path = "pages/readings/#{filename}"
+    route = Path.join("/", Path.dirname(html_path)) <> "/"
+
+    struct!(
+      __MODULE__,
+      [
+        id: id,
+        type: :book_review,
+        body: body,
+        src_path: src_path,
+        html_path: html_path,
+        route: route,
+        date: Map.get(attrs, :date, DateTime.utc_now())
+      ] ++
+        Map.to_list(attrs)
+    )
+  end
+
   def build(file_path, attrs, body) do
     id = Path.basename(Path.rootname(file_path))
     html_path = Path.join(id, "index.html")

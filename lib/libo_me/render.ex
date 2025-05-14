@@ -90,6 +90,30 @@ defmodule LiboMe.Render do
     """
   end
 
+  def book_reviews(assigns) do
+    ~H"""
+    <.layout
+      title={"Books I Read — #{Content.site_title()}"}
+      description={@page.description}
+      route="/book_reports/"
+      og_type="website"
+    >
+      <h1>Books I Read</h1>
+      <div class="post-content">
+        <%= raw @page.body %>
+      </div>
+      <div class="posts">
+        <a :for={review <- @reviews} href={review.route} class="post-link alternate">
+          <div class="archive-post">
+            <small class="post-meta"><%= format_post_date(review.date) %></small>
+            <div class="post-summary"><%= review.title %></div>
+          </div>
+        </a>
+      </div>
+    </.layout>
+    """
+  end
+
   def archive(assigns) do
     ~H"""
     <.layout
@@ -155,10 +179,12 @@ defmodule LiboMe.Render do
             <meta itemprop="datePublished" content={format_iso_date(@date)} />
             <meta itemprop="dateModified" content={format_iso_date(@date)} />
             <meta itemprop="wordCount" content={@wordcount} />
-            <meta itemprop="keywords" content={Enum.join(@keywords, ",")} />
+            <%= if Map.has_key?(assigns, :keywords) && @keywords do %>
+              <meta itemprop="keywords" content={Enum.join(@keywords, ",")} />
+              <meta :for={keyword <- @keywords} property="article:tag" content={keyword} />
+            <% end %>
             <meta property="article:author" content={Content.site_author()} />
             <meta property="article:section" content="Software" />
-            <meta :for={keyword <- @keywords} property="article:tag" content={keyword} />
             <meta property="article:published_time" content={format_iso_date(@date)} />
             <meta property="article:modified_time" content={format_iso_date(@date)} />
           <% end %>
@@ -169,6 +195,7 @@ defmodule LiboMe.Render do
           <header>
             <div class="social">
               <a href="/">Home</a>
+              <a href="/book_reports/">Reading</a>
               <%!-- <a href="/about/">About</a> --%>
               <%!-- <a type="application/rss+xml" href="/index.xml">RSS</a> --%>
               <a href="https://github.com/LiboShen">Github</a>

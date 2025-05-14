@@ -61,7 +61,15 @@ defmodule LiboMe.Content do
     @pages |> Enum.find(&(&1.id == "404"))
   end
 
+  def all_book_reviews do
+    @pages |> Enum.filter(&(&1.type == :book_review)) |> Enum.sort_by(& &1.date, {:desc, Date})
+  end
+
+  def book_reviews_page do
+    @pages |> Enum.find(&(&1.id == "book_reviews"))
+  end
+
   def all_pages do
-    [about_page()] ++ all_posts()
+    [about_page(), book_reviews_page()] ++ all_posts() ++ all_book_reviews()
   end
 end
