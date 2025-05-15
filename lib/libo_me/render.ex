@@ -38,6 +38,55 @@ defmodule LiboMe.Render do
   end
 
   def post(assigns) do
+    case assigns.type do
+      :book_review -> book_review(assigns)
+      _ -> regular_post(assigns)
+    end
+  end
+
+  def book_review(assigns) do
+    # No need for rating validation here as we check @rating in the template
+    # and use trunc to ensure an integer value
+    
+    ~H"""
+    <.layout
+      title={"#{@title} — #{Content.site_title()}"}
+      description={@description}
+      og_type="article"
+      route={@route}
+      date={@date}
+      keywords={@keywords}
+      wordcount={count_words(@body)}
+    >
+      <div class="post-header">
+        <small class="post-meta"><%= format_post_date(@date) %></small>
+        <h1><%= @title %></h1>
+        <%= if @rating do %>
+          <div class="rating">
+            <% rating_int = trunc(@rating) %>
+            <%= for i <- 1..5 do %>
+              <%= if i <= rating_int do %>
+                <span class="star">★</span>
+              <% else %>
+                <span class="star empty">☆</span>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <article class="post-content">
+        <%= if @image do %>
+          <div class="book-cover">
+            <img src={@image} alt={"Cover of #{@title}"} />
+          </div>
+        <% end %>
+        <%= raw @body %>
+      </article>
+      </.layout>
+    """
+  end
+  
+  def regular_post(assigns) do
     ~H"""
     <.layout
       title={"#{@title} — #{Content.site_title()}"}
@@ -53,7 +102,9 @@ defmodule LiboMe.Render do
         <h1><%= @title %></h1>
       </div>
       <article class="post-content">
-        <p><%= @description %></p>
+        <%= if @description && @description != "" do %>
+          <p><%= @description %></p>
+        <% end %>
         <%= raw @body %>
       </article>
       </.layout>
@@ -102,11 +153,23 @@ defmodule LiboMe.Render do
       <div class="post-content">
         <%= raw @page.body %>
       </div>
-      <div class="posts">
-        <a :for={review <- @reviews} href={review.route} class="post-link alternate">
-          <div class="archive-post">
-            <small class="post-meta"><%= format_post_date(review.date) %></small>
-            <div class="post-summary"><%= review.title %></div>
+      <div class="book-review-list">
+        <a :for={review <- @reviews} href={review.route} class="book-review-item">
+          <div class="book-review-card">
+            <div class="book-cover">
+              <img :if={Map.has_key?(review, :image)} src={review.image} alt={review.title}>
+            </div>
+            <div class="book-info">
+              <div class="book-title"><%= review.title %></div>
+              <small class="post-meta"><%= format_post_date(review.date) %></small>
+              <div :if={Map.has_key?(review, :rating) && is_integer(review.rating)} class="book-rating">
+                <%= for i <- 1..5 do %>
+                  <span class={if i <= review.rating, do: "star", else: "star empty"}>
+                    ★
+                  </span>
+                <% end %>
+              </div>
+            </div>
           </div>
         </a>
       </div>
