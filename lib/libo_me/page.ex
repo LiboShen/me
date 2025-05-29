@@ -59,7 +59,7 @@ defmodule LiboMe.Page do
     html_path = Path.join(["book_reports", id, "index.html"])
     src_path = "pages/readings/#{filename}"
     route = Path.join("/", Path.dirname(html_path)) <> "/"
-    
+
     # Ensure description is present with default empty string
     attrs = Map.put_new(attrs, :description, "")
 

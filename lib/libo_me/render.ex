@@ -47,7 +47,7 @@ defmodule LiboMe.Render do
   def book_review(assigns) do
     # No need for rating validation here as we check @rating in the template
     # and use trunc to ensure an integer value
-    
+
     ~H"""
     <.layout
       title={"#{@title} — #{Content.site_title()}"}
@@ -85,7 +85,7 @@ defmodule LiboMe.Render do
       </.layout>
     """
   end
-  
+
   def regular_post(assigns) do
     ~H"""
     <.layout
